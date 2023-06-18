@@ -1,30 +1,12 @@
 package model;
 
-public class Employee {
-    private int id;
-    private String name;
+public class Employee extends Person {
     private String designation;
 
     public Employee(int id, String name, String designation) {
-        this.id = id;
-        this.name = name;
+        super(id, name);
         this.designation = designation;
-    }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getDesignation() {
@@ -33,5 +15,9 @@ public class Employee {
 
     public void setDesignation(String designation) {
         this.designation = designation;
+    }
+    @Override
+    public String getRole() {
+        return "Employee";
     }
 }
