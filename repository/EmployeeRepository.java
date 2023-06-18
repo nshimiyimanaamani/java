@@ -53,6 +53,8 @@ public class EmployeeRepository {
         }
     }
 
+    // ...
+
     public Employee getEmployeeById(int id) {
         for (Employee employee : employees) {
             if (employee.getId() == id) {
@@ -60,6 +62,16 @@ public class EmployeeRepository {
             }
         }
         return null; // Employee not found with the given ID
+    }
+
+    public List<Employee> getEmployeeById(List<Integer> ids) {
+        List<Employee> result = new ArrayList<>();
+        for (Employee employee : employees) {
+            if (ids.contains(employee.getId())) {
+                result.add(employee);
+            }
+        }
+        return result;
     }
 
     private List<Employee> readEmployeesFromJson() {

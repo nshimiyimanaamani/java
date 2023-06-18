@@ -3,6 +3,7 @@ package main;
 import model.Employee;
 import repository.EmployeeRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,9 +17,10 @@ public class Main {
             System.out.println("Choose an option:");
             System.out.println("1. Add an employee");
             System.out.println("2. Retrieve all employees");
-            System.out.println("3. Retrieve an employee");
-            System.out.println("4. Delete an employee");
-            System.out.println("5. Exit");
+            System.out.println("3. Retrieve an employee by ID");
+            System.out.println("4. Retrieve employees by IDs");
+            System.out.println("5. Delete an employee");
+            System.out.println("6. Exit");
             System.out.print("Enter your choice: ");
 
             int choice = scanner.nextInt();
@@ -26,6 +28,7 @@ public class Main {
 
             switch (choice) {
                 case 1:
+                    // Adding an employee
                     System.out.print("Enter employee ID: ");
                     int id = scanner.nextInt();
                     scanner.nextLine(); // Consume the newline character
@@ -39,6 +42,7 @@ public class Main {
                     System.out.println("Employee added successfully.");
                     break;
                 case 2:
+                    // Retrieving all employees
                     List<Employee> allEmployees = repository.getAllEmployees();
                     if (allEmployees.isEmpty()) {
                         System.out.println("No employees found.");
@@ -50,6 +54,7 @@ public class Main {
                     }
                     break;
                 case 3:
+                    // Retrieving an employee by ID
                     System.out.print("Enter employee ID to retrieve: ");
                     int retrieveId = scanner.nextInt();
                     scanner.nextLine(); // Consume the newline character
@@ -63,6 +68,27 @@ public class Main {
                     }
                     break;
                 case 4:
+                    // Retrieving employees by IDs
+                    System.out.print("Enter employee IDs (comma-separated): ");
+                    String idListInput = scanner.nextLine();
+                    String[] idStrings = idListInput.split(",");
+                    List<Integer> ids = new ArrayList<>();
+                    for (String idString : idStrings) {
+                        ids.add(Integer.parseInt(idString.trim()));
+                    }
+
+                    List<Employee> employeesByIds = repository.getEmployeeById(ids);
+                    if (employeesByIds.isEmpty()) {
+                        System.out.println("No employees found with the given IDs.");
+                    } else {
+                        System.out.println("Employees:");
+                        for (Employee emp : employeesByIds) {
+                            System.out.println(emp.getName() + " - " + emp.getDesignation());
+                        }
+                    }
+                    break;
+                case 5:
+                    // Deleting an employee
                     System.out.print("Enter employee ID to delete: ");
                     int deleteId = scanner.nextInt();
                     scanner.nextLine(); // Consume the newline character
@@ -75,7 +101,7 @@ public class Main {
                         System.out.println("Employee deleted successfully.");
                     }
                     break;
-                case 5:
+                case 6:
                     running = false;
                     break;
                 default:
