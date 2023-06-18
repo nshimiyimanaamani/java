@@ -11,8 +11,9 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import managment.EmployeeManagement;
 
-public class EmployeeRepository {
+public class EmployeeRepository implements EmployeeManagement {
     private static final String JSON_FILE_PATH = "employees.json";
     private List<Employee> employees;
 
