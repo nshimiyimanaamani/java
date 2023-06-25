@@ -35,6 +35,14 @@ public class EmployeeRepository implements EmployeeManagement {
         return employees;
     }
 
+    public void updateEmployee(Employee employee) {
+        int index = employees.indexOf(employee);
+        if (index != -1) {
+            employees.set(index, employee);
+            saveEmployeesToJson();
+        }
+    }
+
     private void saveEmployeesToJson() {
         List<String> employeeJsonStrings = employees.stream()
                 .map(this::convertEmployeeToJson)
@@ -53,8 +61,6 @@ public class EmployeeRepository implements EmployeeManagement {
             e.printStackTrace();
         }
     }
-
-    // ...
 
     public Employee getEmployeeById(int id) {
         for (Employee employee : employees) {
@@ -98,15 +104,15 @@ public class EmployeeRepository implements EmployeeManagement {
         return employees;
     }
 
-    // converts employee string to json
-    // ID:1,NAME:amani,DESIGNATION:IT
     private Employee convertJsonToEmployee(String jsonString) {
         String[] tokens = jsonString.split(",");
         int id = Integer.parseInt(tokens[0].split(":")[1].trim());
         String name = tokens[1].split(":")[1].trim().replaceAll("\"", "");
         String designation = tokens[2].split(":")[1].trim().replaceAll("\"", "");
+        float salary = Float.parseFloat(tokens[3].split(":")[1].trim());
+        String gender = tokens[4].split(":")[1].trim().replaceAll("\"", "");
 
-        return new Employee(id, name, designation);
+        return new Employee(id, name,gender,designation, salary);
     }
 
     private String convertEmployeeToJson(Employee employee) {
@@ -114,7 +120,9 @@ public class EmployeeRepository implements EmployeeManagement {
         jsonString.append("{")
                 .append("\"id\": ").append(employee.getId()).append(", ")
                 .append("\"name\": \"").append(employee.getName()).append("\", ")
-                .append("\"designation\": \"").append(employee.getDesignation()).append("\"")
+                .append("\"designation\": \"").append(employee.getDesignation()).append("\", ")
+                .append("\"salary\": ").append(employee.getSalary()).append(", ")
+                .append("\"gender\": \"").append(employee.getGender()).append("\"")
                 .append("}");
 
         return jsonString.toString();
